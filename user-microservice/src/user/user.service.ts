@@ -1,9 +1,9 @@
+import { JwtPayload } from './jwtPayload';
 import { User } from './user.entity';
 import { RpcException } from '@nestjs/microservices';
 import { UserRepository } from './user.repository';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from '../config/jwt.config';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { GetUserByIdDto } from './dto/getUserById.dto';

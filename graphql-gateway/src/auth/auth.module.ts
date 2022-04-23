@@ -1,4 +1,5 @@
-import { TCP_CLIENT } from 'src/config/tcpClient.config';
+import { userMicroserviceClientName } from './../config/app.config';
+import { ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { UserModule } from './../user/user.module';
 import { Module } from '@nestjs/common';
@@ -10,7 +11,15 @@ import { AuthResolver } from './auth.resolver';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    ClientsModule.register([TCP_CLIENT]),
+    ClientsModule.registerAsync([
+      {
+        useFactory: (configService: ConfigService) => {
+          return configService.get('usermicroservice');
+        },
+        name: userMicroserviceClientName,
+        inject: [ConfigService],
+      },
+    ]),
     UserModule,
   ],
   providers: [AuthService, AuthResolver, JwtStrategy],
