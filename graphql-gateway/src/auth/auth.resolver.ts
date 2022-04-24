@@ -1,4 +1,5 @@
-import { User } from './../user/user.entity';
+import { User } from './../user/user.type';
+import { User as Userman } from './../user/user.entity';
 import { CurrentUser } from './getUser.decorator';
 import { GqlAuthGuard } from './guards/gqlAuth.guard';
 import { LoginInput } from './input/login.input';
@@ -26,10 +27,10 @@ export class AuthResolver {
     return 'Hello Javascript!';
   }
 
-  @Mutation(() => String)
+  @Mutation(() => User)
   async registerUser(
     @Args('registerInput') registerInput: RegisterInput,
-  ): Promise<string> {
+  ): Promise<Userman> {
     try {
       const result = await firstValueFrom(
         this.authService.registerUser(registerInput),

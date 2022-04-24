@@ -16,7 +16,7 @@ export class UserController {
   }
 
   @MessagePattern('user.register')
-  async registerUser(registerDto: RegisterDto): Promise<string> {
+  async registerUser(registerDto: RegisterDto): Promise<User> {
     return await this.userService.registerUser(registerDto);
   }
 

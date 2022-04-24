@@ -18,19 +18,19 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async registerUser(registerDto): Promise<string> {
-    const { firstName, lastName, email, password } = registerDto;
+  async registerUser(registerDto): Promise<User> {
+    const { firstName, lastName, birth, email, password } = registerDto;
     // const user = new User();
     const user = this.create(); // this is testable
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
+    user.birth = new Date(birth);
     const salt = await bcrypt.genSalt(8);
     user.password = await this.hashPassword(password, salt);
 
     try {
-      await user.save();
-      return 'done';
+      return await user.save();
     } catch (error) {
       if (error.code === '23505') {
         throw new RpcException('Email already exists');

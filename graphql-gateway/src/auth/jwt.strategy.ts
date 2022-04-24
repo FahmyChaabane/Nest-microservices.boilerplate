@@ -17,11 +17,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload): Promise<User> {
     const { id } = payload;
-    const user = await firstValueFrom(this.userService.getUserById({ id }));
-    if (!user) {
-      throw new UnauthorizedException();
+    try {
+      const user = await firstValueFrom(this.userService.getUserById({ id }));
+      if (!user) {
+        throw new UnauthorizedException();
+      }
+      // whatever is returned here, gonna be injected into the request that is guarded with this authentication.
+      return user;
+    } catch (error) {
+      // is it necessary ? idk if it is really possible to have token, and execute a mutation when you don't have an account? // should be no but i did the catch anyways
+      // https://stackoverflow.com/questions/71607700/error-exceptionshandler-no-elements-in-sequence-after-upgrading-to-nestjs-v8-a
+      throw new UnauthorizedException('User Not Found');
     }
-    // whatever is returned here, gonna be injected into the request that is guarded with this authentication.
-    return user;
   }
 }

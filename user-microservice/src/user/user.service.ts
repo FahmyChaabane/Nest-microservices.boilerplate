@@ -28,12 +28,16 @@ export class UserService {
     return accessToken;
   }
 
-  async registerUser(registerDto: RegisterDto): Promise<string> {
+  async registerUser(registerDto: RegisterDto): Promise<User> {
     return await this.userRepository.registerUser(registerDto);
   }
 
   getUserById(getUserByIdDto: GetUserByIdDto): Promise<User> {
     const { id } = getUserByIdDto;
-    return this.userRepository.findOne(id);
+    try {
+      return this.userRepository.findOne(id);
+    } catch (error) {
+      throw new RpcException('User Not Found');
+    }
   }
 }

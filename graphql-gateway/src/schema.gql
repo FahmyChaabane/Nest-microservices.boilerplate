@@ -2,13 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  birth: String!
+  email: String!
+  password: String!
+  created_at: String!
+  updated_at: String!
+}
+
 type Query {
   sayHello: String!
   sayJavascript: String!
 }
 
 type Mutation {
-  registerUser(registerInput: RegisterInput!): String!
+  registerUser(registerInput: RegisterInput!): User!
   loginUser(loginInput: LoginInput!): String!
 }
 
@@ -16,8 +27,14 @@ input RegisterInput {
   firstName: String!
   lastName: String!
   email: String!
+  birth: DateTime!
   password: String!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 input LoginInput {
   email: String!
