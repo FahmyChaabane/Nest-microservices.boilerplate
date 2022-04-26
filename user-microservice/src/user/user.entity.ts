@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @Unique(['email'])
@@ -23,6 +24,7 @@ export class User extends BaseEntity {
   @Column()
   email: string;
   @Column()
+  @Exclude({ toPlainOnly: true })
   password: string;
   @CreateDateColumn()
   created_at: Date;

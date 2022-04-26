@@ -10,7 +10,10 @@ export class UserService {
     @Inject(userMicroserviceClientName) private tcp_client: ClientProxy,
   ) {}
 
-  getUserById(sa: { id: number }): Observable<User> {
-    return this.tcp_client.send<User, { id: number }>('user.getUserById', sa);
+  getUserById(userIDobj: { id: number }): Observable<User> {
+    return this.tcp_client.send<User, { id: number }>(
+      'user.getUserById',
+      userIDobj,
+    );
   }
 }
