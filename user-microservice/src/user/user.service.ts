@@ -32,10 +32,10 @@ export class UserService {
     return await this.userRepository.registerUser(registerDto);
   }
 
-  getUserById(getUserByIdDto: GetUserByIdDto): Promise<User> {
+  async getUserById(getUserByIdDto: GetUserByIdDto): Promise<User> {
     const { id } = getUserByIdDto;
     try {
-      return this.userRepository.findOne(id);
+      return await this.userRepository.findOne(id);
     } catch (error) {
       throw new RpcException('User Not Found');
     }

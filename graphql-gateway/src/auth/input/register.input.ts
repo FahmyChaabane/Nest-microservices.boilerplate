@@ -19,12 +19,12 @@ export class RegisterInput {
 
   @Field()
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  birth: Date;
 
   @Field()
   @IsNotEmpty()
-  birth: Date;
+  @IsEmail()
+  email: string;
 
   @Field()
   @MinLength(8)

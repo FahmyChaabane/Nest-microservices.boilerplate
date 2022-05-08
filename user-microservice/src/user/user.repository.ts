@@ -1,3 +1,4 @@
+import { RegisterDto } from './dto/register.dto';
 import { RpcException } from '@nestjs/microservices';
 import { User } from './user.entity';
 import { Repository, EntityRepository } from 'typeorm';
@@ -18,7 +19,7 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async registerUser(registerDto): Promise<User> {
+  async registerUser(registerDto: RegisterDto): Promise<User> {
     const { firstName, lastName, birth, email, password } = registerDto;
     // const user = new User();
     const user = this.create(); // this is testable

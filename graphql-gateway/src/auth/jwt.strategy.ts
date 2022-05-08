@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // whatever is returned here, gonna be injected into the request that is guarded with this authentication.
       return user;
     } catch (error) {
-      // is it necessary ? idk if it is really possible to have token, and execute a mutation when you don't have an account? // should be no but i did the catch anyways
+      // is it necessary ? idk if it is really possible to have token, and execute a mutation when you don't have an account? // should be no but i did the catch anyways // GDM5
       // https://stackoverflow.com/questions/71607700/error-exceptionshandler-no-elements-in-sequence-after-upgrading-to-nestjs-v8-a
       throw new UnauthorizedException('User Not Found');
     }

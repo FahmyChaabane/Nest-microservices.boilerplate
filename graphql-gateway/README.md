@@ -1,0 +1,2 @@
+- declaring enums : https://stackoverflow.com/questions/55598213/enums-not-working-with-nestjs-and-graphql#:~:text=enums%20equal%20their-,string%20equivalents,-rather%20than%20default
+- to be check out later (Done, and it is deprecated) : https://stackoverflow.com/questions/56549704/nestjs-nats-request-response#:~:text=2-,When,-using%20the%20ClientProxy

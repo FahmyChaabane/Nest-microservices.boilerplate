@@ -12,21 +12,52 @@ type User {
   updated_at: String!
 }
 
+type Movie {
+  id: Int!
+  title: String!
+  synopsis: String!
+  genre: [AllowedCategories!]!
+  ranked: Int!
+  score: Float!
+  created_at: String!
+  updated_at: String!
+}
+
+enum AllowedCategories {
+  COMEDY
+  SPORTS
+  DRAMA
+  SCHOOL
+  MUSIC
+  ROMANCE
+  ADVENTURE
+  SCI_FICT
+  MYSTERY
+  FANTASY
+  ACTION
+  MAGIC
+  HISTORICAL
+  PARODY
+}
+
 type Query {
   sayHello: String!
   sayJavascript: String!
+  getAllMovies: [Movie!]!
+  getAllMoviesOfUser: [Movie!]!
 }
 
 type Mutation {
   registerUser(registerInput: RegisterInput!): User!
   loginUser(loginInput: LoginInput!): String!
+  registerMovie(movieInput: MovieInput!): Boolean
 }
 
 input RegisterInput {
   firstName: String!
   lastName: String!
-  email: String!
   birth: DateTime!
+  email: String!
   password: String!
 }
 
@@ -38,4 +69,13 @@ scalar DateTime
 input LoginInput {
   email: String!
   password: String!
+}
+
+input MovieInput {
+  title: String!
+  synopsis: String!
+  genre: [AllowedCategories!]!
+  ranked: Int!
+  score: Float!
+  userId: Int!
 }
