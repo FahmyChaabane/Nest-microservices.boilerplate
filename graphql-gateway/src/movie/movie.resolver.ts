@@ -16,7 +16,8 @@ export class MovieResolver {
   @Query(() => [Movie])
   async getAllMovies(): Promise<Movieman[]> {
     try {
-      return await firstValueFrom(this.movieService.getAllMovies());
+      const movieList = await firstValueFrom(this.movieService.getAllMovies());
+      return movieList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
@@ -26,15 +27,16 @@ export class MovieResolver {
   @UseGuards(GqlAuthGuard)
   async getAllMoviesOfUser(@CurrentUser() user: User): Promise<Movieman[]> {
     try {
-      return await firstValueFrom(
+      const movieList = await firstValueFrom(
         this.movieService.getAllMoviesOfUser(user.id),
       );
+      return movieList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
   }
 
-  @Mutation(() => Boolean, { nullable: true })
+  @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
   registerMovie(@Args('movieInput') movieInput: MovieInput): boolean {
     try {

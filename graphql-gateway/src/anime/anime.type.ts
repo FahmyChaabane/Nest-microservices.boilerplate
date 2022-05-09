@@ -1,8 +1,8 @@
 import { AllowedCategories } from '../common/category.enum';
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('MovieType')
-export class Movie {
+@ObjectType('AnimeType')
+export class Anime {
   @Field(() => Int)
   id: number;
 
@@ -20,6 +20,12 @@ export class Movie {
 
   @Field(() => Float)
   score: number;
+
+  @Field(() => Int, { nullable: true })
+  episodes: number;
+
+  @Field({ nullable: true })
+  IsMovie: boolean;
 
   @Field()
   created_at: string;

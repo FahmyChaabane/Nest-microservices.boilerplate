@@ -1,30 +1,5 @@
-import { AllowedCategories } from './../category.enum';
-import { IsNotEmpty } from 'class-validator';
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { WatchInput } from 'src/common/watch.input';
 
 @InputType()
-export class MovieInput {
-  @Field()
-  @IsNotEmpty()
-  title: string;
-
-  @Field()
-  @IsNotEmpty()
-  synopsis: string;
-
-  @Field(() => [AllowedCategories])
-  @IsNotEmpty()
-  genre: AllowedCategories[];
-
-  @Field(() => Int)
-  @IsNotEmpty()
-  ranked: number;
-
-  @Field(() => Float)
-  @IsNotEmpty()
-  score: number;
-
-  @Field(() => Int)
-  @IsNotEmpty()
-  userId: number;
-}
+export class MovieInput extends WatchInput {}

@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type UserType {
   id: Int!
   firstName: String!
   lastName: String!
@@ -12,13 +12,15 @@ type User {
   updated_at: String!
 }
 
-type Movie {
+type AnimeType {
   id: Int!
   title: String!
   synopsis: String!
   genre: [AllowedCategories!]!
   ranked: Int!
   score: Float!
+  episodes: Int
+  IsMovie: Boolean
   created_at: String!
   updated_at: String!
 }
@@ -40,17 +42,31 @@ enum AllowedCategories {
   PARODY
 }
 
+type MovieType {
+  id: Int!
+  title: String!
+  synopsis: String!
+  genre: [AllowedCategories!]!
+  ranked: Int!
+  score: Float!
+  created_at: String!
+  updated_at: String!
+}
+
 type Query {
   sayHello: String!
   sayJavascript: String!
-  getAllMovies: [Movie!]!
-  getAllMoviesOfUser: [Movie!]!
+  getAllAnimes: [AnimeType!]!
+  getAllAnimesOfUser: [AnimeType!]!
+  getAllMovies: [MovieType!]!
+  getAllMoviesOfUser: [MovieType!]!
 }
 
 type Mutation {
-  registerUser(registerInput: RegisterInput!): User!
+  registerUser(registerInput: RegisterInput!): UserType!
   loginUser(loginInput: LoginInput!): String!
-  registerMovie(movieInput: MovieInput!): Boolean
+  registerAnime(animeInput: AnimeInput!): Boolean!
+  registerMovie(movieInput: MovieInput!): Boolean!
 }
 
 input RegisterInput {
@@ -69,6 +85,17 @@ scalar DateTime
 input LoginInput {
   email: String!
   password: String!
+}
+
+input AnimeInput {
+  title: String!
+  synopsis: String!
+  genre: [AllowedCategories!]!
+  ranked: Int!
+  score: Float!
+  userId: Int!
+  episodes: Int
+  IsMovie: Boolean
 }
 
 input MovieInput {

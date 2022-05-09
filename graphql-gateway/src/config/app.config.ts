@@ -21,7 +21,21 @@ export const movieMicroserviceConfig = registerAs('moviemicroservice', () => ({
         process.env.RMQ_PORT,
       )}`,
     ],
-    queue: process.env.RQM_QUEUE,
+    queue: process.env.MOVIE_RQM_QUEUE,
+  },
+}));
+
+// anime microservice config
+export const animeMicroserviceClientName = 'ANIME_RMQ_SERVICE';
+export const animeMicroserviceConfig = registerAs('animemicroservice', () => ({
+  transport: Transport.RMQ,
+  options: {
+    urls: [
+      `${process.env.RMQ_PROTOCOL}://${process.env.RMQ_HOST}:${parseInt(
+        process.env.RMQ_PORT,
+      )}`,
+    ],
+    queue: process.env.ANIME_RQM_QUEUE,
   },
 }));
 

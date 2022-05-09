@@ -2,6 +2,7 @@ import {
   userMicroserviceConfig,
   appconfig,
   movieMicroserviceConfig,
+  animeMicroserviceConfig,
 } from './config/app.config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -17,7 +18,12 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [appconfig, userMicroserviceConfig, movieMicroserviceConfig],
+      load: [
+        appconfig,
+        userMicroserviceConfig,
+        movieMicroserviceConfig,
+        animeMicroserviceConfig,
+      ],
       envFilePath: '.development.env',
       isGlobal: true,
       cache: true,

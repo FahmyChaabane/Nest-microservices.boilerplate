@@ -1,8 +1,22 @@
+import { animeMicroserviceClientName } from './../config/app.config';
+import { ConfigService } from '@nestjs/config';
+import { ClientsModule } from '@nestjs/microservices';
 import { Module } from '@nestjs/common';
 import { AnimeService } from './anime.service';
 import { AnimeResolver } from './anime.resolver';
 
 @Module({
-  providers: [AnimeService, AnimeResolver]
+  imports: [
+    ClientsModule.registerAsync([
+      {
+        useFactory: (configService: ConfigService) => {
+          return configService.get('animemicroservice');
+        },
+        inject: [ConfigService],
+        name: animeMicroserviceClientName,
+      },
+    ]),
+  ],
+  providers: [AnimeService, AnimeResolver],
 })
 export class AnimeModule {}
