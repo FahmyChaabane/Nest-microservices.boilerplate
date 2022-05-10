@@ -1,3 +1,4 @@
+import { MovieService } from './../movie/movie.service';
 import { firstValueFrom } from 'rxjs';
 import { AnimeService } from './anime.service';
 import { User } from './../user/user.entity';
@@ -11,12 +12,15 @@ import { Anime as Animeman } from './anime.entity';
 
 @Resolver()
 export class AnimeResolver {
-  constructor(private animeService: AnimeService) {}
+  constructor(
+    private readonly animeService: AnimeService,
+    private readonly movieService: MovieService,
+  ) {}
 
   @Query(() => [Anime])
   async getAllAnimes(): Promise<Animeman[]> {
     try {
-      const animeList = await firstValueFrom(this.animeService.getAllMovies());
+      const animeList = await firstValueFrom(this.animeService.getAllAnimes());
       return animeList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -27,10 +31,10 @@ export class AnimeResolver {
   @UseGuards(GqlAuthGuard)
   async getAllAnimesOfUser(@CurrentUser() user: User): Promise<Animeman[]> {
     try {
-      const movieList = await firstValueFrom(
-        this.animeService.getAllMoviesOfUser(user.id),
+      const animeList = await firstValueFrom(
+        this.animeService.getAllAnimesOfUser(user.id),
       );
-      return movieList;
+      return animeList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
@@ -39,8 +43,12 @@ export class AnimeResolver {
   @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
   registerAnime(@Args('animeInput') animeInput: AnimeInput): boolean {
+    const { IsMovie } = animeInput;
     try {
-      this.animeService.registerMovie(animeInput);
+      this.animeService.registerAnime(animeInput);
+      if (IsMovie === true) {
+        this.movieService.registerMovie(animeInput);
+      }
       return true;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

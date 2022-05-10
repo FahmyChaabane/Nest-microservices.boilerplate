@@ -14,4 +14,6 @@ export class RegisterAnimeDto {
   score: number;
   @IsInt()
   userId: number;
+  @IsInt()
+  episodes: number;
 }

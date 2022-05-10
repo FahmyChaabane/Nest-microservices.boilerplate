@@ -1,5 +1,4 @@
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
@@ -9,7 +8,6 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.connectMicroservice<MicroserviceOptions>(configService.get('rmqOptions'));
   await app.startAllMicroservices();
-  app.useGlobalPipes(new ValidationPipe());
   await app.listen(configService.get('app.port'));
 }
 bootstrap();

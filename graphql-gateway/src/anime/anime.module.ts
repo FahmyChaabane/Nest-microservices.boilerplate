@@ -1,3 +1,4 @@
+import { MovieModule } from './../movie/movie.module';
 import { animeMicroserviceClientName } from './../config/app.config';
 import { ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
@@ -16,6 +17,7 @@ import { AnimeResolver } from './anime.resolver';
         name: animeMicroserviceClientName,
       },
     ]),
+    MovieModule,
   ],
   providers: [AnimeService, AnimeResolver],
 })

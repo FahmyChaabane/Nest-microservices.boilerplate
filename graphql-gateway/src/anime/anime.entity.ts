@@ -7,7 +7,6 @@ export interface Anime {
   ranked: number;
   score: number;
   episodes: number;
-  IsMovie: boolean;
   created_at: string;
   updated_at: string;
 }

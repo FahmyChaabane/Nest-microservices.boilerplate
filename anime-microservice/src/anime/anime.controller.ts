@@ -2,9 +2,10 @@ import { Anime } from './anime.entity';
 import { RegisterAnimeDto } from './dto/resgisterAnime.dto';
 import { AnimeService } from './anime.service';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 
 @Controller('anime')
+@UsePipes(new ValidationPipe())
 export class AnimeController {
   constructor(private readonly animeService: AnimeService) {}
 

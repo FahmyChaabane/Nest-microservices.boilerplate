@@ -1,0 +1,1 @@
+- useful nginx reverse proxy config : https://linuxize.com/post/nginx-reverse-proxy/

@@ -30,6 +30,8 @@ export class Anime extends BaseEntity {
   score: number;
   @Column({ type: 'int' })
   userId: number;
+  @Column({ default: 0 })
+  episodes: number;
   @CreateDateColumn()
   created_at: Date;
   @UpdateDateColumn()

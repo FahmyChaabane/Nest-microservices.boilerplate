@@ -12,15 +12,13 @@ type UserType {
   updated_at: String!
 }
 
-type AnimeType {
+type MovieType {
   id: Int!
   title: String!
   synopsis: String!
   genre: [AllowedCategories!]!
   ranked: Int!
   score: Float!
-  episodes: Int
-  IsMovie: Boolean
   created_at: String!
   updated_at: String!
 }
@@ -42,13 +40,14 @@ enum AllowedCategories {
   PARODY
 }
 
-type MovieType {
+type AnimeType {
   id: Int!
   title: String!
   synopsis: String!
   genre: [AllowedCategories!]!
   ranked: Int!
   score: Float!
+  episodes: Int
   created_at: String!
   updated_at: String!
 }
@@ -94,7 +93,7 @@ input AnimeInput {
   ranked: Int!
   score: Float!
   userId: Int!
-  episodes: Int
+  episodes: Int = 0
   IsMovie: Boolean
 }
 

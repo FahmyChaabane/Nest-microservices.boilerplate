@@ -3,6 +3,8 @@ import {
   ClassSerializerInterceptor,
   Controller,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { User } from './user.entity';
@@ -11,6 +13,7 @@ import { GetUserByIdDto } from './dto/getUserById.dto';
 import { LoginDto } from './dto/login.dto';
 
 @Controller('user')
+@UsePipes(new ValidationPipe())
 @UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
   constructor(private userService: UserService) {}

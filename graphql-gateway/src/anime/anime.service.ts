@@ -11,15 +11,15 @@ export class AnimeService {
     @Inject(animeMicroserviceClientName) private rabbit_client: ClientProxy,
   ) {}
 
-  registerMovie(animeInput: AnimeInput): void {
+  registerAnime(animeInput: AnimeInput): void {
     this.rabbit_client.emit<void, AnimeInput>('anime.register', animeInput);
   }
 
-  getAllMovies(): Observable<Anime[]> {
+  getAllAnimes(): Observable<Anime[]> {
     return this.rabbit_client.send<Anime[], unknown>('anime.list', {});
   }
 
-  getAllMoviesOfUser(userId: number): Observable<Anime[]> {
+  getAllAnimesOfUser(userId: number): Observable<Anime[]> {
     return this.rabbit_client.send<Anime[], number>('anime.list.id', userId);
   }
 }

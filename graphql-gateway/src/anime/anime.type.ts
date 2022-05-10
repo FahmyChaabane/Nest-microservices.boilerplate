@@ -24,9 +24,6 @@ export class Anime {
   @Field(() => Int, { nullable: true })
   episodes: number;
 
-  @Field({ nullable: true })
-  IsMovie: boolean;
-
   @Field()
   created_at: string;
 

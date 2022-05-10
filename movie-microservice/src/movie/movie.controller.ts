@@ -2,9 +2,10 @@ import { Movie } from './movie.entity';
 import { RegisterMovieDto } from './dto/resgisterMovie.dto';
 import { MovieService } from './movie.service';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 
 @Controller('movie')
+@UsePipes(new ValidationPipe())
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 

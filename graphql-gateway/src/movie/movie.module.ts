@@ -18,5 +18,6 @@ import { MovieResolver } from './movie.resolver';
     ]),
   ],
   providers: [MovieService, MovieResolver],
+  exports: [MovieService],
 })
 export class MovieModule {}
