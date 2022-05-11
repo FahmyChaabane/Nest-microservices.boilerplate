@@ -23,8 +23,6 @@ export class AnimeRepository extends Repository<Anime> {
     try {
       await anime.save();
     } catch (error) {
-      console.log('err', error.message);
-
       if (error.code === '23505') {
         // throw new RpcException('Title already exists'); // the gateway does not wait a response
         throw new ConflictException('Title already exists'); //C-01
