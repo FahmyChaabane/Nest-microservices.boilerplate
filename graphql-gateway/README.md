@@ -2,3 +2,4 @@
 - to be check out later (Done, and it is deprecated) : https://stackoverflow.com/questions/56549704/nestjs-nats-request-response#:~:text=2-,When,-using%20the%20ClientProxy
 - technique of inheritance for input types : https://typegraphql.com/docs/inheritance.html#:~:text=onlyCompleted%3A%20boolean%20%3D%20false%3B%0A%7D-,This%20technique,-also%20works%20with
 - Can a GraphQL input type inherit from another type or interface? : https://stackoverflow.com/questions/41921137/can-a-graphql-input-type-inherit-from-another-type-or-interface#:~:text=55-,No,-%2C%20the%20spec%20does
+- test graphql + nestjs : https://stackoverflow.com/questions/55578780/test-resolvers-in-nestjs

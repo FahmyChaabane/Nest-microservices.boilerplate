@@ -1,3 +1,4 @@
+import { GetUserByIdDto } from './dto/getUserById.dto';
 import { User } from './user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -8,22 +9,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 describe('UserController', () => {
   let userController: UserController;
   let userService: UserService;
-  let mockedUser: User;
-
-  beforeAll(() => {
-    mockedUser = new User();
-    mockedUser.id = 1;
-    mockedUser.firstName = 'Jhon';
-    mockedUser.lastName = 'Doe';
-    mockedUser.birth = new Date();
-    mockedUser.email = 'Jhon.Doe@email.com';
-    mockedUser.created_at = new Date();
-    mockedUser.updated_at = new Date();
-  });
+  const mockedUser: User = new User();
+  mockedUser.id = 1;
+  mockedUser.firstName = 'Jhon';
+  mockedUser.lastName = 'Doe';
+  mockedUser.birth = new Date();
+  mockedUser.email = 'Jhon.Doe@email.com';
+  mockedUser.created_at = new Date();
+  mockedUser.updated_at = new Date();
+  const mockedToken = 'XXXXXXXXX';
 
   const mockedUserService = {
-    loginUser: jest.fn(),
+    loginUser: jest.fn().mockReturnValue(mockedToken),
     registerUser: jest.fn().mockResolvedValue(mockedUser),
+    getUserById: jest.fn().mockResolvedValue(mockedUser),
   };
 
   beforeEach(async () => {
@@ -48,13 +47,18 @@ describe('UserController', () => {
 
   describe('loginUser method', () => {
     const loginDto: LoginDto = {
-      email: 'Jhon.Doe@email.com',
+      email: mockedUser.email,
       password: 'Wxc123..',
     };
 
     it('should call loginUser method successfully', () => {
       userController.loginUser(loginDto);
-      expect(userService.loginUser).toHaveBeenCalled();
+      expect(userService.loginUser).toHaveBeenCalledWith(loginDto);
+    });
+
+    it('should return a token successfully', async () => {
+      const token = await userController.loginUser(loginDto);
+      expect(token).toBe(mockedToken);
     });
   });
 
@@ -68,7 +72,7 @@ describe('UserController', () => {
     };
     it('should call registerUser method successfully', () => {
       userController.registerUser(registerDto);
-      expect(userService.registerUser).toHaveBeenCalled();
+      expect(userService.registerUser).toHaveBeenCalledWith(registerDto);
     });
 
     it('should return registred user successfully', async () => {
@@ -78,8 +82,18 @@ describe('UserController', () => {
   });
 
   describe('getUserById method', () => {
-    it('should call getUserById method successfully', () => {});
+    const getUserByIdDto: GetUserByIdDto = {
+      id: mockedUser.id,
+    };
 
-    it('should return user by its id successfully', async () => {});
+    it('should call getUserById method successfully', () => {
+      userController.getUserById(getUserByIdDto);
+      expect(userService.getUserById).toHaveBeenCalledWith(getUserByIdDto);
+    });
+
+    it('should return user by its id successfully', async () => {
+      const user = await userController.getUserById(getUserByIdDto);
+      expect(user).toEqual(mockedUser);
+    });
   });
 });
