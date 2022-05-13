@@ -1,5 +1,4 @@
 import { MovieService } from './../movie/movie.service';
-import { firstValueFrom } from 'rxjs';
 import { AnimeService } from './anime.service';
 import { User } from './../user/user.entity';
 import { CurrentUser } from './../auth/getUser.decorator';
@@ -20,7 +19,7 @@ export class AnimeResolver {
   @Query(() => [Anime])
   async getAllAnimes(): Promise<Animeman[]> {
     try {
-      const animeList = await firstValueFrom(this.animeService.getAllAnimes());
+      const animeList = await this.animeService.getAllAnimes();
       return animeList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -31,9 +30,7 @@ export class AnimeResolver {
   @UseGuards(GqlAuthGuard)
   async getAllAnimesOfUser(@CurrentUser() user: User): Promise<Animeman[]> {
     try {
-      const animeList = await firstValueFrom(
-        this.animeService.getAllAnimesOfUser(user.id),
-      );
+      const animeList = await this.animeService.getAllAnimesOfUser(user.id);
       return animeList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

@@ -2,7 +2,7 @@ import { User } from './../user/user.entity';
 import { userMicroserviceClientName } from './../config/app.config';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { LoginInput } from './input/login.input';
 import { RegisterInput } from './input/register.input';
 
@@ -12,14 +12,15 @@ export class AuthService {
     @Inject(userMicroserviceClientName) private tcp_client: ClientProxy,
   ) {}
 
-  loginUser(loginInput: LoginInput): Observable<string> {
-    return this.tcp_client.send<string, LoginInput>('user.login', loginInput);
+  async registerUser(registerInput: RegisterInput): Promise<User> {
+    return await firstValueFrom(
+      this.tcp_client.send<User, RegisterInput>('user.register', registerInput),
+    );
   }
 
-  registerUser(registerInput: RegisterInput): Observable<User> {
-    return this.tcp_client.send<User, RegisterInput>(
-      'user.register',
-      registerInput,
+  async loginUser(loginInput: LoginInput): Promise<string> {
+    return await firstValueFrom(
+      this.tcp_client.send<string, LoginInput>('user.login', loginInput),
     );
   }
 }

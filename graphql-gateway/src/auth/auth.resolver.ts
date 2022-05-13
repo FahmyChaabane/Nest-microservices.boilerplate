@@ -32,9 +32,7 @@ export class AuthResolver {
     @Args('registerInput') registerInput: RegisterInput,
   ): Promise<Userman> {
     try {
-      const result = await firstValueFrom(
-        this.authService.registerUser(registerInput),
-      );
+      const result = await this.authService.registerUser(registerInput);
       return result;
     } catch (error) {
       // i guess, for the exceptions to be "catched" by graphql-nest, they gotta be inside the resolver and not in services
@@ -46,9 +44,7 @@ export class AuthResolver {
   @Mutation(() => String)
   async loginUser(@Args('loginInput') loginInput: LoginInput): Promise<string> {
     try {
-      const result = await firstValueFrom(
-        this.authService.loginUser(loginInput),
-      );
+      const result = await this.authService.loginUser(loginInput);
       return result;
     } catch (error) {
       throw new AuthenticationError(error.message);

@@ -1,4 +1,3 @@
-import { firstValueFrom } from 'rxjs';
 import { MovieService } from './movie.service';
 import { User } from './../user/user.entity';
 import { CurrentUser } from './../auth/getUser.decorator';
@@ -16,7 +15,7 @@ export class MovieResolver {
   @Query(() => [Movie])
   async getAllMovies(): Promise<Movieman[]> {
     try {
-      const movieList = await firstValueFrom(this.movieService.getAllMovies());
+      const movieList = await this.movieService.getAllMovies();
       return movieList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -27,9 +26,7 @@ export class MovieResolver {
   @UseGuards(GqlAuthGuard)
   async getAllMoviesOfUser(@CurrentUser() user: User): Promise<Movieman[]> {
     try {
-      const movieList = await firstValueFrom(
-        this.movieService.getAllMoviesOfUser(user.id),
-      );
+      const movieList = await this.movieService.getAllMoviesOfUser(user.id);
       return movieList;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

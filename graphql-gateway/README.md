@@ -3,3 +3,5 @@
 - technique of inheritance for input types : https://typegraphql.com/docs/inheritance.html#:~:text=onlyCompleted%3A%20boolean%20%3D%20false%3B%0A%7D-,This%20technique,-also%20works%20with
 - Can a GraphQL input type inherit from another type or interface? : https://stackoverflow.com/questions/41921137/can-a-graphql-input-type-inherit-from-another-type-or-interface#:~:text=55-,No,-%2C%20the%20spec%20does
 - test graphql + nestjs : https://stackoverflow.com/questions/55578780/test-resolvers-in-nestjs
+- test function returning observable : https://stackoverflow.com/questions/55200278/nest-js-issue-writing-jest-test-case-for-a-function-returning-observable-axios
+- test rejected observable : https://stackoverflow.com/questions/61742615/nest-js-handling-errors-for-httpservice

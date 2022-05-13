@@ -1,5 +1,5 @@
 import { movieMicroserviceClientName } from './../config/app.config';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Movie } from './movie.entity';
 import { MovieInput } from './input/movie.input';
 import { ClientProxy } from '@nestjs/microservices';
@@ -15,11 +15,15 @@ export class MovieService {
     this.rabbit_client.emit<void, MovieInput>('movie.register', movieInput);
   }
 
-  getAllMovies(): Observable<Movie[]> {
-    return this.rabbit_client.send<Movie[], unknown>('movie.list', {});
+  async getAllMovies(): Promise<Movie[]> {
+    return await firstValueFrom(
+      this.rabbit_client.send<Movie[], unknown>('movie.list', {}),
+    );
   }
 
-  getAllMoviesOfUser(userId: number): Observable<Movie[]> {
-    return this.rabbit_client.send<Movie[], number>('movie.list.id', userId);
+  async getAllMoviesOfUser(userId: number): Promise<Movie[]> {
+    return await firstValueFrom(
+      this.rabbit_client.send<Movie[], number>('movie.list.id', userId),
+    );
   }
 }
