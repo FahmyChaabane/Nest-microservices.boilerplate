@@ -17,8 +17,4 @@ describe('UserResolver', () => {
       expect(userResolver).toBeDefined();
     });
   });
-
-  describe('loginUser method', () => {
-    it('should call loginUser method successfully', () => {});
-  });
 });

@@ -3,6 +3,7 @@ import {
   appconfig,
   movieMicroserviceConfig,
   animeMicroserviceConfig,
+  jwt_secret_config,
 } from './config/app.config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       load: [
         appconfig,
+        jwt_secret_config,
         userMicroserviceConfig,
         movieMicroserviceConfig,
         animeMicroserviceConfig,

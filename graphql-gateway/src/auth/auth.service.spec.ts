@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 
 describe('AnimeResolver', () => {
   let authService: AuthService;
-  let rabbit_client: ClientProxy;
+  let tcp_client: ClientProxy;
 
   const mockedUser: User = {
     id: 0,
@@ -34,13 +34,13 @@ describe('AnimeResolver', () => {
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
-    rabbit_client = module.get<ClientProxy>(userMicroserviceClientName);
+    tcp_client = module.get<ClientProxy>(userMicroserviceClientName);
   });
 
   describe('Init', () => {
     it('should be defined', () => {
       expect(authService).toBeDefined();
-      expect(rabbit_client).toBeDefined();
+      expect(tcp_client).toBeDefined();
     });
   });
 
@@ -55,13 +55,13 @@ describe('AnimeResolver', () => {
 
     it('should call registerUser method successfully', async () => {
       await authService.registerUser(mockedRegisterInput);
-      expect(rabbit_client.send).toHaveBeenCalledWith(
+      expect(tcp_client.send).toHaveBeenCalledWith(
         'user.register',
         mockedRegisterInput,
       );
     });
     it('should return user successfully', async () => {
-      rabbit_client.send = jest.fn().mockImplementation(() => of(mockedUser));
+      tcp_client.send = jest.fn().mockImplementation(() => of(mockedUser));
       const user = await authService.registerUser(mockedRegisterInput);
       expect(user).toEqual(mockedUser);
     });
@@ -76,7 +76,7 @@ describe('AnimeResolver', () => {
 
     it('should call loginUser method successfully', () => {
       authService.loginUser(mockedLoginInput);
-      expect(rabbit_client.send).toHaveBeenCalledWith(
+      expect(tcp_client.send).toHaveBeenCalledWith(
         'user.login',
         mockedLoginInput,
       );

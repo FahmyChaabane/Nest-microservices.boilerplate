@@ -1,7 +1,7 @@
 import { userMicroserviceClientName } from './../config/app.config';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { User } from './user.entity';
 
 @Injectable()
@@ -10,10 +10,9 @@ export class UserService {
     @Inject(userMicroserviceClientName) private tcp_client: ClientProxy,
   ) {}
 
-  getUserById(userIDobj: { id: number }): Observable<User> {
-    return this.tcp_client.send<User, { id: number }>(
-      'user.getUserById',
-      userIDobj,
+  getUserById(userIDobj: { id: number }): Promise<User> {
+    return firstValueFrom(
+      this.tcp_client.send<User, { id: number }>('user.getUserById', userIDobj),
     );
   }
 }

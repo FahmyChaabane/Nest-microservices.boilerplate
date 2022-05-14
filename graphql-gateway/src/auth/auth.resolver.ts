@@ -6,7 +6,6 @@ import { LoginInput } from './input/login.input';
 import { AuthService } from './auth.service';
 import { RegisterInput } from './input/register.input';
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
-import { firstValueFrom } from 'rxjs';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { UseGuards } from '@nestjs/common';
 

@@ -1,6 +1,11 @@
 import { Transport } from '@nestjs/microservices';
 import { registerAs } from '@nestjs/config';
 
+// app config
+export const jwt_secret_config = registerAs('jwt_secret', () => ({
+  jwtSecret: process.env.JWT_SECRET,
+}));
+
 // user microservice config
 export const userMicroserviceClientName = 'AUTH_TCP_SERVICE';
 export const userMicroserviceConfig = registerAs('usermicroservice', () => ({
