@@ -14,10 +14,22 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { AnimeModule } from './anime/anime.module';
 import { MovieModule } from './movie/movie.module';
+// import { WinstonModule } from 'nest-winston';
+// import * as winston from 'winston';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    // WinstonModule.forRoot({
+    //   transports: [
+    //     new winston.transports.File({
+    //       level: 'verbose',
+    //       filename: './logs/app.log',
+    //       maxsize: 5242880, //5MB
+    //       maxFiles: 5,
+    //     }),
+    //   ],
+    // }),
     ConfigModule.forRoot({
       load: [
         appconfig,
@@ -35,6 +47,8 @@ import { ConfigModule } from '@nestjs/config';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      cors: ['http://nginx-reverse-proxy'],
+      introspection: true,
     }),
     AuthModule,
     UserModule,
