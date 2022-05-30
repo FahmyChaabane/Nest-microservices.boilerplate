@@ -20,5 +20,6 @@ import { AnimeResolver } from './anime.resolver';
     MovieModule,
   ],
   providers: [AnimeService, AnimeResolver],
+  exports: [AnimeService],
 })
 export class AnimeModule {}

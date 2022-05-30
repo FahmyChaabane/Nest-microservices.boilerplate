@@ -47,7 +47,9 @@ import { ConfigModule } from '@nestjs/config';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      cors: ['http://nginx-reverse-proxy'],
+      cors: {
+        origin: 'https://studio.apollographql.com',
+      },
       introspection: true,
     }),
     AuthModule,
