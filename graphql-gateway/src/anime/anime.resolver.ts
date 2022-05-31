@@ -1,19 +1,29 @@
+import { UserService } from './../user/user.service';
 import { MovieService } from './../movie/movie.service';
 import { AnimeService } from './anime.service';
-import { User } from './../user/user.entity';
 import { CurrentUser } from './../auth/getUser.decorator';
 import { InternalServerErrorException, UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from './../auth/guards/gqlAuth.guard';
 import { AnimeInput } from './input/anime.input';
-import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Mutation,
+  Query,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
+import { User } from './../user/user.type';
+import { User as Userman } from './../user/user.entity';
 import { Anime } from './anime.type';
 import { Anime as Animeman } from './anime.entity';
 
-@Resolver()
+@Resolver(() => Anime)
 export class AnimeResolver {
   constructor(
     private readonly animeService: AnimeService,
     private readonly movieService: MovieService,
+    private readonly userService: UserService,
   ) {}
 
   @Query(() => [Anime])
@@ -28,7 +38,7 @@ export class AnimeResolver {
 
   @Query(() => [Anime])
   @UseGuards(GqlAuthGuard)
-  async getAllAnimesOfUser(@CurrentUser() user: User): Promise<Animeman[]> {
+  async getAllAnimesOfUser(@CurrentUser() user: Userman): Promise<Animeman[]> {
     try {
       const animeList = await this.animeService.getAllAnimesOfUser(user.id);
       return animeList;
@@ -50,5 +60,11 @@ export class AnimeResolver {
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
+  }
+
+  @ResolveField(() => User)
+  async adder(@Parent() anime: Animeman): Promise<Userman> {
+    const { userId } = anime;
+    return await this.userService.getUserById({ id: userId });
   }
 }

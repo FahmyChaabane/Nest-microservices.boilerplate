@@ -7,6 +7,7 @@ export interface Anime {
   ranked: number;
   score: number;
   episodes: number;
+  userId: number;
   created_at: string;
   updated_at: string;
 }

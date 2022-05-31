@@ -1,3 +1,5 @@
+import { Movie } from './movie.entity';
+import { UserService } from './../user/user.service';
 import { MovieInput } from './input/movie.input';
 import { MovieResolver } from './movie.resolver';
 import { User } from './../user/user.entity';
@@ -9,6 +11,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 describe('MovieResolver', () => {
   let movieResolver: MovieResolver;
   let movieService: MovieService;
+  let userService: UserService;
 
   const mockMovieRecord = {
     id: 1,
@@ -18,8 +21,9 @@ describe('MovieResolver', () => {
     ranked: 1,
     score: 2.2,
     episodes: 10,
-    created_at: new Date(),
-    updated_at: new Date(),
+    userId: 0,
+    created_at: new Date().toString(),
+    updated_at: new Date().toString(),
   };
 
   const mockedMovieService = {
@@ -28,23 +32,30 @@ describe('MovieResolver', () => {
     registerMovie: jest.fn(),
   };
 
+  const mockedUserService = {
+    getUserById: jest.fn().mockReturnValue(mockMovieRecord),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MovieResolver, MovieService],
+      providers: [MovieResolver, MovieService, UserService],
     })
       .overrideProvider(MovieService)
       .useValue(mockedMovieService)
-
+      .overrideProvider(UserService)
+      .useValue(mockedUserService)
       .compile();
 
     movieResolver = module.get<MovieResolver>(MovieResolver);
     movieService = module.get<MovieService>(MovieService);
+    userService = module.get<UserService>(UserService);
   });
 
   describe('Init', () => {
     it('should be defined', () => {
       expect(movieResolver).toBeDefined();
       expect(movieService).toBeDefined();
+      expect(userService).toBeDefined();
     });
   });
 
@@ -83,7 +94,7 @@ describe('MovieResolver', () => {
       birth: new Date(),
       email: 'Jhon.Doe@email.com',
       created_at: new Date(),
-      updated_at: undefined,
+      updated_at: new Date(),
     };
     it('should call getAllMoviesOfUser method successfully', () => {
       mockedMovieService.getAllMoviesOfUser = jest
@@ -138,6 +149,20 @@ describe('MovieResolver', () => {
       expect(() => movieResolver.registerMovie(mockedMovieInput)).toThrow(
         InternalServerErrorException,
       );
+    });
+  });
+
+  describe('adder ResolveField method', () => {
+    it('should call adder method successfully', () => {
+      movieResolver.adder(mockMovieRecord);
+      expect(userService.getUserById).toHaveBeenCalledWith({
+        id: mockMovieRecord.userId,
+      });
+    });
+
+    it('should return user successfully', async () => {
+      const user = await movieResolver.adder(mockMovieRecord);
+      expect(user).toEqual(mockMovieRecord);
     });
   });
 });

@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import { AnimeInput } from './input/anime.input';
 import { User } from './../user/user.entity';
 import { InternalServerErrorException } from '@nestjs/common';
@@ -11,6 +12,7 @@ describe('AnimeResolver', () => {
   let animeResolver: AnimeResolver;
   let animeService: AnimeService;
   let movieService: MovieService;
+  let userService: UserService;
 
   const mockAnimeRecord = {
     id: 1,
@@ -18,10 +20,15 @@ describe('AnimeResolver', () => {
     synopsis: 'synopsis',
     genre: [AllowedCategories.ACTION],
     ranked: 1,
+    userId: 0,
     score: 2.2,
     episodes: 10,
-    created_at: new Date(),
-    updated_at: new Date(),
+    created_at: new Date().toString(),
+    updated_at: new Date().toString(),
+  };
+
+  const mockedUser = {
+    id: mockAnimeRecord.userId,
   };
 
   const mockedAnimeService = {
@@ -34,19 +41,26 @@ describe('AnimeResolver', () => {
     registerMovie: jest.fn(),
   };
 
+  const mockedUserService = {
+    getUserById: jest.fn().mockReturnValue(mockedUser),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AnimeResolver, AnimeService, MovieService],
+      providers: [AnimeResolver, AnimeService, MovieService, UserService],
     })
       .overrideProvider(AnimeService)
       .useValue(mockedAnimeService)
       .overrideProvider(MovieService)
       .useValue(mockedMovieService)
+      .overrideProvider(UserService)
+      .useValue(mockedUserService)
       .compile();
 
     animeResolver = module.get<AnimeResolver>(AnimeResolver);
     animeService = module.get<AnimeService>(AnimeService);
     movieService = module.get<MovieService>(MovieService);
+    userService = module.get<UserService>(UserService);
   });
 
   describe('Init', () => {
@@ -54,6 +68,7 @@ describe('AnimeResolver', () => {
       expect(animeResolver).toBeDefined();
       expect(animeService).toBeDefined();
       expect(movieService).toBeDefined();
+      expect(userService).toBeDefined();
     });
   });
 
@@ -166,6 +181,20 @@ describe('AnimeResolver', () => {
       expect(() => animeResolver.registerAnime(mockedAnimeInput)).toThrow(
         InternalServerErrorException,
       );
+    });
+  });
+
+  describe('adder ResolveField method', () => {
+    it('should call adder method successfully', () => {
+      animeResolver.adder(mockAnimeRecord);
+      expect(userService.getUserById).toHaveBeenCalledWith({
+        id: mockAnimeRecord.userId,
+      });
+    });
+
+    it('should return user successfully', async () => {
+      const user = await animeResolver.adder(mockAnimeRecord);
+      expect(user).toEqual(mockedUser);
     });
   });
 });

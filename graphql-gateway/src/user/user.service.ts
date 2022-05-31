@@ -10,8 +10,8 @@ export class UserService {
     @Inject(userMicroserviceClientName) private tcp_client: ClientProxy,
   ) {}
 
-  getUserById(userIDobj: { id: number }): Promise<User> {
-    return firstValueFrom(
+  async getUserById(userIDobj: { id: number }): Promise<User> {
+    return await firstValueFrom(
       this.tcp_client.send<User, { id: number }>('user.getUserById', userIDobj),
     );
   }

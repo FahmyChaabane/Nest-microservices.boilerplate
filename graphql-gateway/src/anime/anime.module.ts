@@ -1,8 +1,9 @@
+import { UserModule } from './../user/user.module';
 import { MovieModule } from './../movie/movie.module';
 import { animeMicroserviceClientName } from './../config/app.config';
 import { ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AnimeService } from './anime.service';
 import { AnimeResolver } from './anime.resolver';
 
@@ -17,6 +18,7 @@ import { AnimeResolver } from './anime.resolver';
         name: animeMicroserviceClientName,
       },
     ]),
+    forwardRef(() => UserModule),
     MovieModule,
   ],
   providers: [AnimeService, AnimeResolver],

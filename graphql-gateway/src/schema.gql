@@ -2,15 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type MovieType {
+type AnimeType {
   id: Int!
   title: String!
   synopsis: String!
   genre: [AllowedCategories!]!
   ranked: Int!
   score: Float!
+  episodes: Int
   created_at: String!
   updated_at: String!
+  adder: UserType!
 }
 
 enum AllowedCategories {
@@ -30,16 +32,16 @@ enum AllowedCategories {
   PARODY
 }
 
-type AnimeType {
+type MovieType {
   id: Int!
   title: String!
   synopsis: String!
   genre: [AllowedCategories!]!
   ranked: Int!
   score: Float!
-  episodes: Int
   created_at: String!
   updated_at: String!
+  adder: UserType!
 }
 
 type UserType {

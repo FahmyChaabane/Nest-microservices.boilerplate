@@ -1,3 +1,4 @@
+import { User } from './../user/user.type';
 import { AllowedCategories } from '../common/category.enum';
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 
@@ -29,4 +30,7 @@ export class Anime {
 
   @Field()
   updated_at: string;
+
+  @Field(() => User)
+  adder: User;
 }
