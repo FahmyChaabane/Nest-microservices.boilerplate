@@ -11,8 +11,10 @@ export PASS=$(sed -n '4p' /tmp/.auth)
 
 echo "***** login to dockerhub *****"
 docker login -u $ACCOUNT_NAME -p $PASS
+# sudo docker login -u $ACCOUNT_NAME -p $PASS
 
 echo "***** run the image *****"
-docker container run -d --net jenky $ACCOUNT_NAME/$IMAGE_NAME:$BUILD_TAG
+docker container run -d --name $IMAGE_NAME --net jenky -p 80:80 $ACCOUNT_NAME/$IMAGE_NAME:$BUILD_TAG
+# sudo docker container run -d --name $IMAGE_NAME --net jenky -p 80:80 $ACCOUNT_NAME/$IMAGE_NAME:$BUILD_TAG
 
-echo "**** FINISH ****"
+echo "****** FINISH ******"

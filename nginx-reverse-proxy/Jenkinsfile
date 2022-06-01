@@ -20,11 +20,11 @@ pipeline {
             }
         }        
 
-        // stage('Deploy') {
-        //         steps {
-        //             sh './jenkins/deploy/deploy.sh'
-        //         }
-        //     }
+        stage('Deploy') {
+            steps {
+                sh './jenkins/deploy/deploy.sh'
+            }
+        }
         
     }
 
