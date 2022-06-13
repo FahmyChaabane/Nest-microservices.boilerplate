@@ -1,0 +1,4 @@
+- run rabbitmq instance : docker container run -d --name rabbit --hostname rabbit -p 5672:5672 -p 15672:15672 --net jenky rabbitmq:3-management
+- run jenkins instance : docker run --name jenkins -d -p 8080:8080 -p 50000:50000 --net jenky -v /var/run/docker.sock:/var/run/docker.sock -v /var/jenkins_home:/var/jenkins_home dockerized_jenkins:lts
+- run postgres instance : docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres --net jenky -v pfa-bd:/var/lib/postgresql/data postgres
+- ubuntuno config : https://stackoverflow.com/questions/53984274/ssh-from-one-container-to-another-container#:~:text=1%20bronze%20badge-,Detailed,-step%20by%20step

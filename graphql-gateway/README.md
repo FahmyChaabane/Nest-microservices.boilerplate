@@ -5,3 +5,10 @@
 - test graphql + nestjs : https://stackoverflow.com/questions/55578780/test-resolvers-in-nestjs
 - test function returning observable : https://stackoverflow.com/questions/55200278/nest-js-issue-writing-jest-test-case-for-a-function-returning-observable-axios
 - test rejected observable : https://stackoverflow.com/questions/61742615/nest-js-handling-errors-for-httpservice
+- Jay comment about testing : https://stackoverflow.com/questions/62829590/cannot-spyon-on-a-primitive-value-undefined-given-in-nestjs
+- How to test a controller with a service that has @Inject in its constructor : https://github.com/nestjs/nest/issues/194
+- Jest.js error: "Received: serializes to the same string" : https://stackoverflow.com/questions/56839801/jest-js-error-received-serializes-to-the-same-string
+- How can I user configService in super()? : https://stackoverflow.com/questions/64909086/how-can-i-user-configservice-in-super
+- How to access GraphQL-Reponse with interceptor : https://stackoverflow.com/questions/56932295/how-to-access-final-graphql-reponse-in-nest-js-with-interceptor
+- logging interceptor : https://stackoverflow.com/questions/55093055/logging-request-response-in-nest-js
+- support multiple event subscribers @EventPattern() : https://github.com/nestjs/nest/pull/6349#:~:text=versioning%C2%A0%236278-,microservices,-%3A%20support%20multiple%20event

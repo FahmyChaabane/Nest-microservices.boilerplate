@@ -1,1 +1,2 @@
 - global pipe doesn't seem to be working : https://github.com/nestjs/nest/issues/5974
+- global pipes hybrid apps (Jay comment ): https://stackoverflow.com/questions/56889890/dto-not-working-for-microservice-but-working-for-apis-directly
