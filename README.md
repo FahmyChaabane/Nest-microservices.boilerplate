@@ -2,4 +2,5 @@
 - run jenkins instance : docker run --name jenkins -d -p 8080:8080 -p 50000:50000 --net jenky -v /var/run/docker.sock:/var/run/docker.sock -v /var/jenkins_home:/var/jenkins_home dockerized_jenkins:lts
 - run postgres instance : docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres --net jenky -v pfa-bd:/var/lib/postgresql/data postgres
 - run ubuntuno (a VM like) instance : docker container run --rm --name ubuntuno --net jenky -it -d -p 22 -v /var/run/docker.sock:/var/run/docker.sock dockerized_ubuntu:lts
+- in order to run a custom gitlab instance : docker run --detach --hostname gitlab.example.com --publish 443:443 --publish 9090:80 --publish 22:22 --name gitlab --restart always --net jenky --volume $GITLAB_HOME/config:/etc/gitlab --volume $GITLAB_HOME/logs:/var/log/gitlab --volume $GITLAB_HOME/data:/var/opt/gitlab --shm-size 256m gitlab/gitlab-ee
 - ubuntuno config : https://stackoverflow.com/questions/53984274/ssh-from-one-container-to-another-container#:~:text=1%20bronze%20badge-,Detailed,-step%20by%20step
